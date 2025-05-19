@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   get: ^4.7.2
   get_cli: ^1.8.1
+  shared_preferences: ^2.5.3
+  gap: ^3.0.1
 
 dev_dependencies:
   flutter_test:

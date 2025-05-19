@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:last_of_pi/app/common/values/app_colors.dart';
+import 'package:last_of_pi/app/common/values/app_text_style.dart';
 import 'package:last_of_pi/app/common/values/pi_digits.dart';
 import 'package:last_of_pi/app/modules/adventure/controllers/adventure_controller.dart';
 
@@ -19,49 +20,79 @@ class Presenter extends GetView<AdventureController> {
           padding: const EdgeInsets.all(20.0),
           child: Align(
             alignment: Alignment.bottomLeft,
-            child: Obx(() {
-              return RichText(
-                text: TextSpan(
-                  text: "3.",
-                  style: const TextStyle(
-                      color: AppColors.contentPrimary,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 60,
-                      letterSpacing: 5),
-                  children: [
-                    ...controller.enterDigits.map((entry) {
-                      String digit = entry.value;
-                      int i = entry.position;
-                      return TextDigit(entry, digit);
-                    }),
-                  ],
-                ),
-              );
-            }),
+            child: Obx(
+              () {
+                return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          text: "3.",
+                          style: const TextStyle(
+                              color: AppColors.contentPrimary,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 60,
+                              letterSpacing: 5),
+                          children: [
+                            ...controller.enterDigits.map((entry) {
+                              return TextDigit(entry);
+                            }),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                                text: "Score: ",
+                                style: AppTextStyle.bodySStrong
+                                    .copyWith(color: AppColors.contentPrimary),
+                                children: [
+                                  TextSpan(
+                                      text: controller.totalScore.toString()),
+                                ]),
+                          ),
+                          RichText(
+                            text: TextSpan(
+                                text: "Streak: ",
+                                style: AppTextStyle.bodySStrong
+                                    .copyWith(color: AppColors.contentPrimary),
+                                children: [
+                                  TextSpan(
+                                      text: controller.currentStreak.value
+                                          .length()
+                                          .toString()),
+                                ]),
+                          )
+                        ],
+                      )
+                    ]);
+              },
+            ),
           ),
         ),
       ),
     );
   }
 
-  TextSpan TextDigit(Digit entry, String digit) {
+  TextSpan TextDigit(Digit digit) {
     return TextSpan(
-      text: entry.isClicked ? piDigits[entry.position] : digit,
+      text: digit.isClicked ? piDigits[digit.position] : digit.value,
       style: TextStyle(
-        color: (entry.value == piDigits[entry.position] && !entry.isClicked)
+        color: (digit.isCorrect() && !digit.isClicked)
             ? AppColors.contentPrimary
-            : (entry.value != piDigits[entry.position] && !entry.isClicked)
+            : (!digit.isCorrect() && !digit.isClicked)
                 ? AppColors.red
                 : AppColors.green,
         fontWeight: FontWeight.w600,
         fontSize: 50,
       ),
-      recognizer: entry.value != piDigits[entry.position]
+      recognizer: digit.value != piDigits[digit.position]
           ? (TapGestureRecognizer()
             ..onTap = () {
-              entry.isClicked = !entry.isClicked;
+              digit.isClicked = !digit.isClicked;
               controller.enterDigits.refresh();
-              print("Giang digit: ${entry.isClicked} ${entry.value}");
             })
           : null,
     );

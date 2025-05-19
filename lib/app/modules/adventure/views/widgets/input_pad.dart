@@ -84,7 +84,7 @@ class InputPad extends GetView<AdventureController> {
                 PadButton(onPress: controller.onPressPad, textValue: '0'),
                 PadButton(
                   onPress: (value) {
-                    controller.onClear();
+                    controller.initializeState();
                   },
                   textValue: 'CLEAR',
                   useSecondColor: true,
