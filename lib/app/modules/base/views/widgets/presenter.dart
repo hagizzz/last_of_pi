@@ -86,7 +86,7 @@ class Presenter extends StatelessWidget {
   }
 
   Color getDigitColor(Digit digit) {
-    if (digit.isHint == true) return Colors.white24;
+    if (digit.isHint == true) return Colors.black26;
     if (digit.isCorrect() && !digit.isClicked) return AppColors.contentPrimary;
     if (!digit.isCorrect() && !digit.isClicked) return AppColors.red;
     return AppColors.green;

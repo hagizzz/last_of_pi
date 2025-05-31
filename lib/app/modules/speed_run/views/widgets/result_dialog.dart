@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:last_of_pi/app/common/retroButton.dart';
+import 'package:last_of_pi/app/common/retro_button.dart';
+import 'package:last_of_pi/app/common/widgets/custom_dialog.dart';
 import 'package:last_of_pi/app/modules/speed_run/controllers/speed_run_controller.dart';
 
 class ResultDialog extends StatelessWidget {
@@ -19,8 +20,8 @@ class ResultDialog extends StatelessWidget {
           });
         }
       },
-      child: SimpleDialog(
-        title: const Text('Congratulation!'),
+      child: CustomDialog(
+        title: 'Congratulation!',
         children: [
           SimpleDialogOption(
             onPressed: () {},

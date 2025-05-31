@@ -13,34 +13,36 @@ class AdventureView extends GetView<AdventureController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.surfacePrimary,
-        body: Column(
-          children: [
-            Presenter(controller: controller),
-            Obx(
-              () => StatusBar(
-                items: [
-                  StatusItem(
-                    label: "Score",
-                    value: controller.totalScore.toString(),
-                  ),
-                  StatusItem(
-                    label: "Streak",
-                    value: controller.currentStreak.value.length().toString(),
-                  ),
-                  StatusItem(
-                    label: "Digits",
-                    value: controller.enterDigits.length.toString(),
-                  ),
-                ],
-                textStyle: AppTextStyle.bodySStrong
-                    .copyWith(color: AppColors.contentPrimary),
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        body: SafeArea(
+          child: Column(
+            children: [
+              Presenter(controller: controller),
+              Obx(
+                () => StatusBar(
+                  items: [
+                    StatusItem(
+                      label: "Score",
+                      value: controller.totalScore.toString(),
+                    ),
+                    StatusItem(
+                      label: "Streak",
+                      value: controller.currentStreak.value.length().toString(),
+                    ),
+                    StatusItem(
+                      label: "Digits",
+                      value: controller.enterDigits.length.toString(),
+                    ),
+                  ],
+                  textStyle: AppTextStyle.bodySStrong
+                      .copyWith(color: AppColors.contentPrimary),
+                ),
               ),
-            ),
-            InputPad(
-              controller: controller,
-            ),
-          ],
+              InputPad(
+                controller: controller,
+              ),
+            ],
+          ),
         ));
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 abstract class AppColors {
+  static const Color primary = Color(0xFFff8e00);
+
   static const Color contentBrandPrimary = Color(0xFF3280F6);
   static const Color contentPrimaryInverse = Color(0xFFFFFFFF);
   static const Color surfaceBrandLight = Color(0xFFE6F1FF);
@@ -12,7 +14,8 @@ abstract class AppColors {
   static const Color surfaceSafe = Color(0xFF39A26A);
   static const Color surfaceSecondary = Color(0xFFF8FAFC);
   static const Color surfaceWarningLight = Color(0xFFFFFAF0);
-  static const Color surfacePrimary = Color(0xFF1F1F1F);
+  // static const Color surfacePrimary = Color(0xFF1F1F1F);
+  static const Color surfacePrimary = Color(0xffffffe8);
 
   static Color primaryColorWithOpacity =
       const Color(0xFF3280F6).withOpacity(0.5);
@@ -31,7 +34,8 @@ abstract class AppColors {
   static const Color contentWarning = Color(0xFFDF6C20);
   static const Color contentSafe = Color(0xFF39A26A);
   static const Color contentSafeLight = Color(0xFFF0FFF4);
-  static const Color contentPrimary = Color(0xFFD1CFC0);
+  // static const Color contentPrimary = Color(0xFFD1CFC0);
+  static const Color contentPrimary = Colors.black;
   static const Color contentBorder = Color(0xFFCBD5E0);
   static const Color contentDanger = Color(0xFFE53E3E);
 

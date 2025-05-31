@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:last_of_pi/app/common/retroButton.dart';
+import 'package:last_of_pi/app/common/retro_button.dart';
 import 'package:last_of_pi/app/routes/app_pages.dart';
 
 import '../controllers/select_mode_single_controller.dart';
@@ -16,8 +16,7 @@ class SelectModeSingleView extends GetView<SelectModeSingleController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             RetroButton(
-              width: 200,
-              label: 'ADVENTURE',
+              label: 'Adventure',
               onPressed: () {
                 Get.toNamed(Routes.ADVENTURE);
               },
@@ -26,8 +25,7 @@ class SelectModeSingleView extends GetView<SelectModeSingleController> {
               height: 16,
             ),
             RetroButton(
-              width: 200,
-              label: 'SPEED RUN',
+              label: 'Speed Run',
               onPressed: () {
                 Get.toNamed(Routes.SPEED_RUN);
               },

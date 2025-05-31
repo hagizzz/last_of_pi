@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:last_of_pi/app/common/retroButton.dart';
+import 'package:last_of_pi/app/common/retro_button.dart';
 import 'package:last_of_pi/app/common/values/app_colors.dart';
 import 'package:last_of_pi/app/routes/app_pages.dart';
+import 'package:last_of_pi/app/theme/app_theme.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:last_of_pi/app/logo.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,11 +25,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       getPages: AppPages.routes,
       title: 'Last of Pi',
-      theme: ThemeData(
-        fontFamily: 'Inter',
-        useMaterial3: false,
-        scaffoldBackgroundColor: const Color(0xFF92DAFD),
-      ),
+      theme: AppTheme.lightTheme,
       home: const MyHomePage(),
     );
   }
@@ -51,19 +50,18 @@ class MyHomePage extends StatelessWidget {
             Column(
               children: [
                 RetroButton(
-                  width: 200,
-                  label: 'PLAY',
+                  width: 250,
+                  label: 'Play',
                   onPressed: () {
                     Get.toNamed(Routes.SELECT_MODE_SINGLE);
                   },
-                  
                 ),
                 const SizedBox(
                   height: 16,
                 ),
                 RetroButton(
-                  width: 200,
-                  label: 'DUAL',
+                  width: 250,
+                  label: 'Dual',
                   onPressed: () {
                     Get.toNamed(Routes.SELECT_MODE_DUAL);
                   },
@@ -72,8 +70,8 @@ class MyHomePage extends StatelessWidget {
                   height: 16,
                 ),
                 RetroButton(
-                  width: 200,
-                  label: 'STATISTIC',
+                  width: 250,
+                  label: 'Statistics',
                   onPressed: () {
                     Get.toNamed(Routes.STATISTICS);
                   },
@@ -82,7 +80,7 @@ class MyHomePage extends StatelessWidget {
                   height: 16,
                 ),
                 RetroButton(
-                  width: 200,
+                  width: 250,
                   label: 'GIANG TEST',
                   onPressed: () {
                     Get.toNamed(Routes.TEST);
@@ -97,29 +95,6 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class Logo extends StatelessWidget {
-  const Logo({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 160,
-      height: 160,
-      decoration: BoxDecoration(
-          // color: const Color(0xFFF2C078),
-          borderRadius: BorderRadius.circular(100)),
-      child: const Center(
-        child: Text(
-          "π",
-          style: TextStyle(fontFamily: "Piedra", fontSize: 100),
-        ),
-      ),
-    );
-  }
-}
-
 class Header extends StatelessWidget {
   const Header({
     super.key,
@@ -128,15 +103,10 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        color: Colors.amber,
-        height: 60,
-        width: MediaQuery.of(context).size.width / 1.5,
-        child: const Center(
-          child: Text(
-            "Last Of Pi",
-            style: TextStyle(fontFamily: "LuckiestGuy", fontSize: 30),
-          ),
+      child: Text(
+        "Last Of PI",
+        style: GoogleFonts.modak(
+          fontSize: 70,
         ),
       ),
     );

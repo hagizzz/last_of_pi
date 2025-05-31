@@ -14,7 +14,7 @@ class SpeedRunView extends GetView<SpeedRunController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.surfacePrimary,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         body: Column(
           children: [
             Presenter(

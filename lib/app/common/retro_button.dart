@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:last_of_pi/app/common/values/app_colors.dart';
 
 class RetroButton extends StatefulWidget {
   final String label;
   final VoidCallback onPressed;
   final double width;
+  final EdgeInsets padding;
 
   const RetroButton({
     super.key,
     required this.label,
     required this.onPressed,
-    required this.width,
+    this.width = 250,
+    this.padding = const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
   });
 
   @override
@@ -21,8 +24,6 @@ class _RetroButtonState extends State<RetroButton> {
 
   @override
   Widget build(BuildContext context) {
-    const Color neonGreen = Color(0xFFDBFF00);
-
     return GestureDetector(
       onTapDown: (_) => setState(() => _isPressed = true),
       onTapUp: (_) {
@@ -37,7 +38,7 @@ class _RetroButtonState extends State<RetroButton> {
             ? Matrix4.translationValues(2, 2, 0)
             : Matrix4.identity(),
         decoration: BoxDecoration(
-          color: neonGreen,
+          color: Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: Colors.black, width: 2),
           boxShadow: _isPressed
@@ -50,14 +51,14 @@ class _RetroButtonState extends State<RetroButton> {
                   ),
                 ],
         ),
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        padding: widget.padding,
         child: Center(
           child: Text(
             widget.label,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black,
-              letterSpacing: 1.5,
+              fontSize: 16,
             ),
           ),
         ),
