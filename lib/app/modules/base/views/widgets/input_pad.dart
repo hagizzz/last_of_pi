@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:last_of_pi/app/common/values/app_colors.dart';
 import 'package:last_of_pi/app/common/values/app_text_style.dart';
-import 'package:last_of_pi/app/modules/adventure/controllers/adventure_controller.dart';
+import 'package:last_of_pi/app/modules/base/controllers/base_controller.dart';
+import 'package:remixicon/remixicon.dart';
 
-class PadButton extends GetView<AdventureController> {
+class PadButton extends StatelessWidget {
   final void Function(String) onPress;
-  final String textValue;
+  final String? textValue;
   final bool useSecondColor;
+  final Icon? icon;
 
   const PadButton({
     super.key,
     required this.onPress,
-    required this.textValue,
+    this.textValue,
+    this.icon,
     this.useSecondColor = false,
   });
 
@@ -28,27 +30,27 @@ class PadButton extends GetView<AdventureController> {
               ),
               shadowColor: Colors.transparent,
               backgroundColor: AppColors.surfacePrimary,
-              foregroundColor: AppColors.contentPrimary, // Text/icon color
-              textStyle: AppTextStyle.headingXL
+              foregroundColor: AppColors.contentPrimary,
+              textStyle: AppTextStyle.headingL
                   .copyWith(color: AppColors.contentPrimary),
               minimumSize: const Size(double.infinity, double.infinity)),
-          onPressed: () => onPress(textValue),
-          child: Text(textValue),
+          onPressed: () => onPress(textValue ?? ''),
+          child: icon != null ? icon! : Text(textValue ?? ''),
         ),
       ),
     );
   }
 }
 
-class InputPad extends GetView<AdventureController> {
-  // final void Function(String) onPress;
-  // final bool disableClear;
-  const InputPad({super.key});
+class InputPad extends StatelessWidget {
+  final BaseController controller;
+
+  const InputPad({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 300.0,
+      height: 260.0,
       child: Column(
         children: <Widget>[
           Expanded(
@@ -84,9 +86,22 @@ class InputPad extends GetView<AdventureController> {
                 PadButton(onPress: controller.onPressPad, textValue: '0'),
                 PadButton(
                   onPress: (value) {
-                    controller.initializeState();
+                    controller.isHelp.value = !controller.isHelp.value;
                   },
-                  textValue: 'CLEAR',
+                  icon: const Icon(
+                    RemixIcons.search_line,
+                    color: Colors.white,
+                  ),
+                ),
+                PadButton(
+                  onPress: (value) {
+                    controller.initializeBaseState();
+                    controller.isHelp.value = false;
+                  },
+                  icon: const Icon(
+                    RemixIcons.close_large_fill,
+                    color: Colors.red,
+                  ),
                   useSecondColor: true,
                   // disabled: disableClear,
                 ),
