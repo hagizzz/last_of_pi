@@ -19,11 +19,11 @@ class SpeedRunMode {
   static SpeedRunMode fromEnum(ModeLevel level) {
     switch (level) {
       case ModeLevel.easy:
-        return SpeedRunMode(level: level, numberOfDigits: 5);
+        return SpeedRunMode(level: level, numberOfDigits: 20);
       case ModeLevel.hard:
-        return SpeedRunMode(level: level, numberOfDigits: 8);
+        return SpeedRunMode(level: level, numberOfDigits: 50);
       case ModeLevel.hardest:
-        return SpeedRunMode(level: level, numberOfDigits: 10);
+        return SpeedRunMode(level: level, numberOfDigits: 100);
       case ModeLevel.custom:
         return SpeedRunMode(level: level, numberOfDigits: 0);
     }
@@ -31,13 +31,13 @@ class SpeedRunMode {
 }
 
 class SpeedRunController extends BaseController {
-  
   late ConfettiController controllerCenter;
 
   SpeedRunMode? customMode;
 
   Rx<SpeedRunMode> selectedMode =
       Rx<SpeedRunMode>(SpeedRunMode.fromEnum(ModeLevel.easy));
+  RxString timeRecord = ''.obs;
 
   void start() {
     print("Giang $isRunning");
@@ -112,6 +112,7 @@ class SpeedRunController extends BaseController {
     start();
     if (enterDigits.length == selectedMode.value.numberOfDigits) {
       controllerCenter.play();
+      timeRecord.value = formatTime(elapsedMilliseconds.value);
       Get.dialog(
         barrierDismissible: false,
         ConfettiWidget(

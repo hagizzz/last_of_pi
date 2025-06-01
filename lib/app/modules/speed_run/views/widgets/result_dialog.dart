@@ -25,7 +25,7 @@ class ResultDialog extends StatelessWidget {
         children: [
           SimpleDialogOption(
             onPressed: () {},
-            child: const Text('Time: '),
+            child: Text('Time: ${controller.timeRecord}'),
           ),
           Center(
               child: RetroButton(

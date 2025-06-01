@@ -59,16 +59,16 @@ class MyHomePage extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                RetroButton(
-                  width: 250,
-                  label: 'Dual',
-                  onPressed: () {
-                    Get.toNamed(Routes.SELECT_MODE_DUAL);
-                  },
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
+                // RetroButton(
+                //   width: 250,
+                //   label: 'Dual',
+                //   onPressed: () {
+                //     Get.toNamed(Routes.SELECT_MODE_DUAL);
+                //   },
+                // ),
+                // const SizedBox(
+                //   height: 16,
+                // ),
                 RetroButton(
                   width: 250,
                   label: 'Statistics',
@@ -79,13 +79,13 @@ class MyHomePage extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                RetroButton(
-                  width: 250,
-                  label: 'GIANG TEST',
-                  onPressed: () {
-                    Get.toNamed(Routes.TEST);
-                  },
-                ),
+                // RetroButton(
+                //   width: 250,
+                //   label: 'GIANG TEST',
+                //   onPressed: () {
+                //     Get.toNamed(Routes.TEST);
+                //   },
+                // ),
               ],
             ),
           ],

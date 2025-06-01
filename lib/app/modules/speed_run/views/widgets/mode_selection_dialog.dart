@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:last_of_pi/app/common/retro_button.dart';
-import 'package:last_of_pi/app/modules/speed_run/controllers/speed_run_controller.dart';
 import 'package:last_of_pi/app/common/widgets/custom_dialog.dart';
+import 'package:last_of_pi/app/modules/speed_run/controllers/speed_run_controller.dart';
 
 class ModeSelectionDialog extends StatelessWidget {
   final void Function(SpeedRunMode mode) onModeSelected;
@@ -19,7 +19,7 @@ class ModeSelectionDialog extends StatelessWidget {
               Navigator.pop(context);
               onModeSelected(SpeedRunMode.fromEnum(ModeLevel.easy));
             },
-            label: "Easy - 50",
+            label: "Easy - 20",
             width: 200,
           ),
         ),
@@ -30,7 +30,7 @@ class ModeSelectionDialog extends StatelessWidget {
               Navigator.pop(context);
               onModeSelected(SpeedRunMode.fromEnum(ModeLevel.hard));
             },
-            label: "Hard - 80",
+            label: "Hard - 50",
             width: 200,
           ),
         ),

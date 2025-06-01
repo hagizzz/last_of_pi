@@ -29,8 +29,7 @@ class CustomLevelDialog extends StatelessWidget {
               controller: _controller,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                hintText: '50',
-              ),
+                  hintText: '50', hintStyle: TextStyle(color: Colors.grey)),
               onSubmitted: (_) => _handleSubmit(),
             ),
           ),
