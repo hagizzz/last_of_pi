@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:last_of_pi/app/common/retro_button.dart';
+import 'package:last_of_pi/app/common/widgets/custom_dialog.dart';
 
 class CustomLevelDialog extends StatelessWidget {
   CustomLevelDialog({super.key});
@@ -17,41 +19,32 @@ class CustomLevelDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) {
-        if (!didPop) {
-          Get.back();
-          Future.delayed(const Duration(milliseconds: 100), () {
-            Get.back();
-          });
-        }
-      },
-      child: SimpleDialog(
-        backgroundColor: const Color(0xFF92DAFD),
-        title: const Center(child: Text('Enter a number')),
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+    return CustomDialog(
+      title: 'Enter a number',
+      children: [
+        Center(
+          child: SizedBox(
+            width: 200,
             child: TextField(
               controller: _controller,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Ex 50...',
+                hintText: '50',
               ),
               onSubmitted: (_) => _handleSubmit(),
             ),
           ),
-          const SizedBox(height: 8),
-          Center(
-            child: ElevatedButton(
-              onPressed: _handleSubmit,
-              child: const Text("OK"),
-            ),
+        ),
+        const SizedBox(height: 8),
+        Center(
+          child: RetroButton(
+            onPressed: _handleSubmit,
+            label: "OK",
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            width: 200,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

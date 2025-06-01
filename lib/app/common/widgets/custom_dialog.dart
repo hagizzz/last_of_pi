@@ -4,15 +4,11 @@ import 'package:get/get.dart';
 class CustomDialog extends StatelessWidget {
   final String title;
   final List<Widget> children;
-  final EdgeInsetsGeometry? titlePadding;
-  final EdgeInsetsGeometry? contentPadding;
 
   const CustomDialog({
     super.key,
     required this.title,
     required this.children,
-    this.titlePadding,
-    this.contentPadding,
   });
 
   @override
@@ -30,9 +26,8 @@ class CustomDialog extends StatelessWidget {
       child: SimpleDialog(
         backgroundColor: Theme.of(context).colorScheme.surface,
         title: Center(child: Text(title)),
-        titlePadding:
-            titlePadding ?? const EdgeInsets.only(top: 20, bottom: 20),
-        contentPadding: contentPadding ?? const EdgeInsets.only(bottom: 30),
+        titlePadding: const EdgeInsets.only(top: 20, bottom: 20),
+        contentPadding: const EdgeInsets.only(bottom: 30),
         shadowColor: Colors.black,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),

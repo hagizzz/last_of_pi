@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:last_of_pi/app/common/retro_button.dart';
 import 'package:last_of_pi/app/common/values/app_colors.dart';
+import 'package:last_of_pi/app/logo.dart';
 import 'package:last_of_pi/app/routes/app_pages.dart';
 import 'package:last_of_pi/app/theme/app_theme.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:last_of_pi/app/logo.dart';
 
 void main() {
   runApp(const MyApp());

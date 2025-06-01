@@ -11,7 +11,7 @@ class ModeSelectionDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomDialog(
-      title: 'Chọn chế độ',
+      title: 'Difficulty',
       children: [
         Center(
           child: RetroButton(
@@ -19,7 +19,7 @@ class ModeSelectionDialog extends StatelessWidget {
               Navigator.pop(context);
               onModeSelected(SpeedRunMode.fromEnum(ModeLevel.easy));
             },
-            label: "Dễ - 50",
+            label: "Easy - 50",
             width: 200,
           ),
         ),
@@ -30,7 +30,7 @@ class ModeSelectionDialog extends StatelessWidget {
               Navigator.pop(context);
               onModeSelected(SpeedRunMode.fromEnum(ModeLevel.hard));
             },
-            label: "Khó - 80",
+            label: "Hard - 80",
             width: 200,
           ),
         ),
@@ -41,7 +41,7 @@ class ModeSelectionDialog extends StatelessWidget {
               Navigator.pop(context);
               onModeSelected(SpeedRunMode.fromEnum(ModeLevel.hardest));
             },
-            label: "Cực khó - 100",
+            label: "Extreme - 100",
             width: 200,
           ),
         ),
@@ -52,7 +52,7 @@ class ModeSelectionDialog extends StatelessWidget {
               Navigator.pop(context);
               onModeSelected(SpeedRunMode.fromEnum(ModeLevel.custom));
             },
-            label: "Điều chỉnh",
+            label: "Customize",
             width: 200,
           ),
         ),
