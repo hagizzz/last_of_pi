@@ -29,7 +29,7 @@ class AppPages {
     GetPage(
       name: _Paths.STATISTICS,
       page: () => const StatisticsView(),
-      binding: StatisticsBinding(),
+      bindings: [StatisticsBinding(), SpeedRunBinding()],
     ),
     GetPage(
       name: _Paths.TEST,
@@ -38,7 +38,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SPEED_RUN,
-      page: () => const SpeedRunView(),
+      page: () => SpeedRunView(),
       binding: SpeedRunBinding(),
     ),
     GetPage(

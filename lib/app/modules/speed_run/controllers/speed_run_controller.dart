@@ -4,8 +4,6 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:last_of_pi/app/modules/base/controllers/base_controller.dart';
-import 'package:last_of_pi/app/modules/speed_run/views/widgets/custom_level_dialog.dart';
-import 'package:last_of_pi/app/modules/speed_run/views/widgets/mode_selection_dialog.dart';
 import 'package:last_of_pi/app/modules/speed_run/views/widgets/result_dialog.dart';
 
 enum ModeLevel { easy, hard, hardest, custom }
@@ -14,33 +12,67 @@ class SpeedRunMode {
   final ModeLevel level;
   final int numberOfDigits;
 
-  SpeedRunMode({required this.level, required this.numberOfDigits});
+  SpeedRunMode({
+    required this.level,
+    required this.numberOfDigits,
+  });
+
+  static const Map<ModeLevel, int> _levelToDigits = {
+    ModeLevel.easy: 2,
+    ModeLevel.hard: 5,
+    ModeLevel.hardest: 10,
+    ModeLevel.custom: 0,
+  };
 
   static SpeedRunMode fromEnum(ModeLevel level) {
-    switch (level) {
-      case ModeLevel.easy:
-        return SpeedRunMode(level: level, numberOfDigits: 20);
-      case ModeLevel.hard:
-        return SpeedRunMode(level: level, numberOfDigits: 50);
-      case ModeLevel.hardest:
-        return SpeedRunMode(level: level, numberOfDigits: 100);
-      case ModeLevel.custom:
-        return SpeedRunMode(level: level, numberOfDigits: 0);
-    }
+    return SpeedRunMode(
+      level: level,
+      numberOfDigits: _levelToDigits[level] ?? 0,
+    );
+  }
+}
+
+class SpeedRunResult {
+  final ModeLevel level;
+  final int numberOfDigits;
+  final int time;
+
+  SpeedRunResult({
+    required this.level,
+    required this.numberOfDigits,
+    required this.time,
+  });
+
+  Map<String, dynamic> toJson() => {
+        'level': level.name,
+        'numberOfDigits': numberOfDigits,
+        'timeInMilliseconds': time,
+      };
+
+  factory SpeedRunResult.fromJson(Map<String, dynamic> json) {
+    return SpeedRunResult(
+      level: ModeLevel.values.firstWhere((e) => e.name == json['level']),
+      numberOfDigits: json['numberOfDigits'],
+      time: json['timeInMilliseconds'],
+    );
+  }
+
+  @override
+  String toString() {
+    return 'Level: $level, Digits: $numberOfDigits, Time: ${time}s';
   }
 }
 
 class SpeedRunController extends BaseController {
   late ConfettiController controllerCenter;
 
-  SpeedRunMode? customMode;
+  // SpeedRunMode? customMode;
 
   Rx<SpeedRunMode> selectedMode =
       Rx<SpeedRunMode>(SpeedRunMode.fromEnum(ModeLevel.easy));
   RxString timeRecord = ''.obs;
 
   void start() {
-    print("Giang $isRunning");
     if (isRunning) return;
     isRunning = true;
     timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
@@ -56,26 +88,6 @@ class SpeedRunController extends BaseController {
   void reset() {
     timer?.cancel();
     isRunning = false;
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-    Get.dialog(
-      barrierDismissible: false,
-      ModeSelectionDialog(
-        onModeSelected: (selectedModeObj) async {
-          final mode = SpeedRunMode.fromEnum(selectedModeObj.level);
-          selectedMode.value = mode;
-          print("Giang ${mode.level}");
-          if (mode.level == ModeLevel.custom) {
-            final result = await Get.dialog<int>(CustomLevelDialog());
-            selectedMode.value = SpeedRunMode(
-                level: ModeLevel.custom, numberOfDigits: result ?? 0);
-          }
-        },
-      ),
-    );
   }
 
   @override
@@ -112,6 +124,13 @@ class SpeedRunController extends BaseController {
     start();
     if (enterDigits.length == selectedMode.value.numberOfDigits) {
       controllerCenter.play();
+      BaseController.saveResult(
+        SpeedRunResult(
+          level: selectedMode.value.level,
+          numberOfDigits: selectedMode.value.numberOfDigits,
+          time: elapsedMilliseconds.value,
+        ),
+      );
       timeRecord.value = formatTime(elapsedMilliseconds.value);
       Get.dialog(
         barrierDismissible: false,
@@ -130,7 +149,6 @@ class SpeedRunController extends BaseController {
       onClose();
     }
     updateStreakPosition();
-    saveDigitsLength();
     hasWrongInput.value = false;
   }
 }

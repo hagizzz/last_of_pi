@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:last_of_pi/app/common/values/pi_digits.dart';
 import 'package:last_of_pi/app/common/widgets/error_shake_effect/error_shake_effect.dart';
+import 'package:last_of_pi/app/modules/speed_run/controllers/speed_run_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Digit {
@@ -38,6 +40,10 @@ class Streak {
   int length() {
     return lastPosition - firstPosition + 1;
   }
+}
+
+class SpeedRunStorage {
+  static const key = 'speed_run_results';
 }
 
 class BaseController extends GetxController {
@@ -105,6 +111,35 @@ class BaseController extends GetxController {
     if (enterDigits.length > topDigits) {
       await prefs.setInt("topDigits", enterDigits.length);
     }
+  }
+
+  static Future<void> saveResult(SpeedRunResult newResult) async {
+    final prefs = await SharedPreferences.getInstance();
+    final rawList = prefs.getStringList('speed_run_results') ?? [];
+
+    final results = rawList.map((jsonStr) {
+      final map = jsonDecode(jsonStr);
+      return SpeedRunResult.fromJson(map);
+    }).toList();
+
+    final index = results.indexWhere((r) =>
+        r.level == newResult.level &&
+        r.numberOfDigits == newResult.numberOfDigits);
+    if (index != -1) {
+      final existing = results[index];
+      if (newResult.time < existing.time) {
+        results[index] = newResult;
+      }
+    } else {
+      results.add(newResult);
+    }
+    final encodedList = results.map((r) => jsonEncode(r.toJson())).toList();
+    await prefs.setStringList('speed_run_results', encodedList);
+  }
+
+  static Future<void> clearResults() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('speed_run_results');
   }
 
   void initializeBaseState() {
