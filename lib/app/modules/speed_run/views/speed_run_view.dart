@@ -13,7 +13,6 @@ import '../controllers/speed_run_controller.dart';
 
 class SpeedRunView extends GetView<SpeedRunController> {
   SpeedRunView({super.key}) {
-    print("giang ne");
     Future.delayed(Duration.zero, () {
       Get.dialog(
         barrierDismissible: false,

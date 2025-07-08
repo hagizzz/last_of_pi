@@ -1,23 +1,43 @@
 import 'package:get/get.dart';
+import 'package:bonsoir/bonsoir.dart';
 
 class TestController extends GetxController {
-  //TODO: Implement TestController
+  late BonsoirService _myService;
+  late BonsoirBroadcast _broadcaster;
+  late BonsoirDiscovery _discovery;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  RxList<BonsoirService> foundPlayers = <BonsoirService>[].obs;
+
+  void startService(String playerName) async {
+    _myService = BonsoirService(
+      name: playerName,
+      type: '_mygame._tcp',
+      port: 12345,
+    );
+
+    _broadcaster = BonsoirBroadcast(service: _myService);
+    await _broadcaster.ready;
+    await _broadcaster.start();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  void startDiscovery() async {
+    _discovery = BonsoirDiscovery(type: '_mygame._tcp');
+    await _discovery.ready;
+
+    _discovery.eventStream!.listen((event) {
+      if (event.type == BonsoirDiscoveryEventType.discoveryServiceFound) {
+        final service = event.service!;
+        if (!foundPlayers.any((p) => p.name == service.name)) {
+          foundPlayers.add(service);
+        }
+      }
+    });
+
+    await _discovery.start();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  void stopAll() {
+    _broadcaster.stop();
+    _discovery.stop();
   }
-
-  void increment() => count.value++;
 }
